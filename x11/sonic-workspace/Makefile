@@ -38,5 +38,6 @@ post-patch:
     @${REINPLACE_CMD} -e 's|/usr/share|${PREFIX}/share|g' \
         ${WRKSRC}/src/*/*
 
+
 PORTSDIR?= ${.CURDIR}/../..
 .include "${PORTSDIR}/Mk/bsd.port.mk"
