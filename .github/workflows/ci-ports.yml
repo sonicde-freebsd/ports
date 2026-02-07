@@ -49,4 +49,22 @@ jobs:
           sshpass -p root ssh -p 10022 -o StrictHostKeyChecking=no root@127.0.0.1 \
             "pkg update -f && pkg install -y git pkgconf cmake ninja \
              qt6-base qt6-tools qt6-declarative qt6-quickcontrols2 \
-             kde6-frameworks
+             kde6-frameworks kde6-plasma kde6-gear \
+             wayland wayland-protocols xorg-minimal llvm17"
+
+      - name: Build changed ports
+        run: |
+          sshpass -p root ssh -p 10022 -o StrictHostKeyChecking=no root@127.0.0.1 "
+            cd /root/ports
+            PORTS=\$(git diff --name-only HEAD~1 | grep '/' | cut -d/ -f1-2 | sort -u)
+            if [ -z \"\$PORTS\" ]; then echo 'No ports changed'; exit 0; fi
+            for p in \$PORTS; do
+              echo '>>> Building port:' \$p
+              cd /root/ports/\$p
+              make makesum
+              make clean
+              make stage
+              make check-plist
+              make package
+            done
+          "
