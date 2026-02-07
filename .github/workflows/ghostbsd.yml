@@ -1,4 +1,4 @@
-name: FreeBSD Ports CI
+name: SonicDE Ports CI
 
 on:
   push:
@@ -24,12 +24,10 @@ jobs:
             pkg update -f
 
             echo ">>> Installing build tools"
-            pkg install -y git pkgconf cmake ninja llvm17
+            pkg install -y git pkgconf cmake ninja llvm17 pkg
 
             echo ">>> Entering repo"
             cd /work/ports
-            pwd
-            ls -R .
 
             echo ">>> Finding all ports"
             PORTS=$(find x11 -mindepth 1 -maxdepth 1 -type d)
@@ -40,11 +38,22 @@ jobs:
             for p in $PORTS; do
               echo ">>> Building port: $p"
               cd "$p"
-              make -f Makefile -m ../../Mk makesum || true
-              make -f Makefile -m ../../Mk clean || true
-              make -f Makefile -m ../../Mk stage || exit 1
-              make -f Makefile -m ../../Mk check-plist || exit 1
-              make -f Makefile -m ../../Mk package || exit 1
+
+              # Clean
+              make clean || true
+
+              # Build
+              make || exit 1
+
+              # Install into staging dir
+              STAGE=/tmp/stage
+              rm -rf $STAGE
+              make install DESTDIR=$STAGE || exit 1
+
+              # Package
+              mkdir -p /tmp/packages
+              pkg create -r $STAGE -m ./pkg -o /tmp/packages || exit 1
+
               cd /work/ports
             done
 
