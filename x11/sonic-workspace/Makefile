@@ -34,7 +34,6 @@ GH_PROJECT= sonic-workspace
 CMAKE_ON=   BUILD_TESTING=OFF \
         KDE_INSTALL_USE_QT_SYS_PATHS=ON
 
-# Fix Linux paths
 post-patch:
     @${REINPLACE_CMD} -e 's|/usr/share|${PREFIX}/share|g' \
         ${WRKSRC}/src/*/*
