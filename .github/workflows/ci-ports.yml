@@ -37,7 +37,7 @@ jobs:
             -drive file=ghostbsd.qcow2,format=qcow2 \
             -nic user,hostfwd=tcp::10022-:22 \
             -nographic \
-            -enable-kvm &
+            -machine accel=tcg &
           sleep 60
 
       - name: Copy ports tree into VM
