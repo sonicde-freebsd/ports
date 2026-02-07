@@ -26,9 +26,6 @@ jobs:
             echo ">>> Installing build tools"
             pkg install -y git pkgconf cmake ninja llvm17
 
-            echo ">>> Installing FreeBSD ports tree"
-            git clone https://git.freebsd.org/ports.git /usr/ports
-
             echo ">>> Entering repo"
             cd /work/ports
             pwd
@@ -43,11 +40,11 @@ jobs:
             for p in $PORTS; do
               echo ">>> Building port: $p"
               cd "$p"
-              make makesum || true
-              make clean || true
-              make stage || exit 1
-              make check-plist || exit 1
-              make package || exit 1
+              make -f Makefile -m ../../Mk makesum || true
+              make -f Makefile -m ../../Mk clean || true
+              make -f Makefile -m ../../Mk stage || exit 1
+              make -f Makefile -m ../../Mk check-plist || exit 1
+              make -f Makefile -m ../../Mk package || exit 1
               cd /work/ports
             done
 
