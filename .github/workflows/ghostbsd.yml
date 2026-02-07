@@ -26,23 +26,25 @@ jobs:
             echo ">>> Installing build tools"
             pkg install -y git pkgconf cmake ninja llvm17
 
-            echo ">>> Detecting changed ports"
-            PORTS=$(git diff --name-only HEAD~1 | grep '/' | cut -d/ -f1-2 | sort -u)
-            if [ -z "$PORTS" ]; then
-              echo "No ports changed"
-              exit 0
-            fi
+            echo ">>> Entering workspace"
+            cd /github/workspace
+
+            echo ">>> Finding all ports"
+            PORTS=$(find . -mindepth 2 -maxdepth 2 -type f -name Makefile -print0 | xargs -0 -n1 dirname)
+
+            echo ">>> Ports found:"
+            echo "$PORTS"
 
             for p in $PORTS; do
               echo ">>> Building port: $p"
-              cd $p
-              make makesum
-              make clean
-              make stage
-              make check-plist
-              make package
-              cd -
+              cd "$p"
+              make makesum || true
+              make clean || true
+              make stage || exit 1
+              make check-plist || exit 1
+              make package || exit 1
+              cd /github/workspace
             done
 
-            echo ">>> Build completed successfully"
+            echo ">>> All ports built successfully"
             exit 0
