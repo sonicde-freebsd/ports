@@ -18,27 +18,69 @@ jobs:
       - name: Install QEMU and tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y qemu-system-x86 qemu-utils genisoimage sshpass
+          sudo apt-get install -y qemu-system-x86 qemu-utils genisoimage sshpass cpio
 
       - name: Download GhostBSD Unstable ISO
         run: |
           wget -O ghostbsd.iso \
             "https://ci.ghostbsd.org/jenkins/job/unstable/job/Verify%20The%20ISO%20Build%20With%20Unstable%20Packages/164/artifact/artifacts/GhostBSD-26.1-R15.0p2-01-30-18.iso"
 
-      - name: Convert ISO to qcow2
+      - name: Create injected init script
         run: |
-          qemu-img convert -O qcow2 ghostbsd.iso ghostbsd.qcow2
+          cat << 'EOF' > init.sh
+          #!/bin/sh
+          sleep 10
 
-      - name: Start GhostBSD VM
+          # Bring up networking
+          for IF in vtnet0 em0 re0; do
+            if ifconfig $IF >/dev/null 2>&1; then
+              ifconfig $IF up
+              dhclient $IF || true
+            fi
+          done
+
+          # Enable root SSH login
+          echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+          # Set root password to 'root'
+          echo "root:root" | pw usermod root -h 0 || true
+
+          # Start SSH
+          service sshd onestart || true
+
+          # Continue normal boot
+          exec /sbin/init
+          EOF
+
+          chmod +x init.sh
+          echo init.sh | cpio -o -H newc > initramfs.cpio
+
+      - name: Start GhostBSD VM (LiveCD + injected init)
         run: |
           qemu-system-x86_64 \
             -m 4096 \
             -smp 4 \
-            -drive file=ghostbsd.qcow2,format=qcow2 \
+            -machine accel=tcg \
+            -cdrom ghostbsd.iso \
+            -initrd initramfs.cpio \
+            -kernel /boot/kernel/kernel \
+            -append "init_script=/init.sh" \
             -nic user,hostfwd=tcp::10022-:22 \
-            -nographic \
-            -machine accel=tcg &
-          sleep 60
+            -nographic &
+          sleep 120
+
+      - name: Wait for SSH to be ready
+        run: |
+          for i in $(seq 1 30); do
+            if sshpass -p root ssh -p 10022 -o StrictHostKeyChecking=no root@127.0.0.1 'echo ok' 2>/dev/null; then
+              echo "SSH is up"
+              exit 0
+            fi
+            echo "Waiting for SSH..."
+            sleep 5
+          done
+          echo "SSH did not come up in time"
+          exit 1
 
       - name: Copy ports tree into VM
         run: |
