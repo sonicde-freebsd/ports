@@ -1,15 +1,15 @@
 PORTNAME=	sonic-desktop
 DISTVERSION=	${KDE_PLASMA_VERSION}
 CATEGORIES=	x11
-
+MASTER_SITES=	KDE/stable/plasma/${KDE_PLASMA_VERSION}/
 DISTNAME=	plasma-desktop-${DISTVERSION}
 DIST_SUBDIR=	KDE/plasma/${KDE_PLASMA_VERSION}
 
 MAINTAINER=	b-aazbsd@proton.me
-COMMENT=	Stub port for sonic desktop
-LICENSE=	LGPL20
+COMMENT=	Stub port of Plasma desktop for SonicDE
+WWW=		https://kde.org/plasma-desktop/
 
-MASTER_SITES=	KDE/stable/plasma/6.5.5/
+LICENSE=	LGPL20
 
 BUILD_DEPENDS=	wayland-protocols>=0:graphics/wayland-protocols \
 		xf86-input-libinput>0:x11-drivers/xf86-input-libinput \
@@ -61,7 +61,7 @@ SDL_USES=		sdl
 SDL_USE=		sdl=sdl2
 SDL_CMAKE_BOOL_OFF=	CMAKE_DISABLE_FIND_PACKAGE_SDL2
 
-BROKEN_DragonFly= BROKEN due to missing dependencies in DPorts
+BROKEN_DragonFly=	broken due to missing dependencies in DPorts
 
 # For building out of tree.
 .include <bsd.port.pre.mk>
@@ -69,4 +69,3 @@ BROKEN_DragonFly= BROKEN due to missing dependencies in DPorts
 DESCR=./pkg-descr
 
 .include <bsd.port.post.mk>
-

@@ -1,8 +1,11 @@
-Plasma is a powerful and customizable Free Software graphical desktop
-environment for Unix workstations made by the KDE community.
+The community-driven Sonic Desktop Environment aims to preserve and improve the
+X11-specific aspects of KDE. It currently consists of the customized KWin/X11
+sonic-win, Plasma Workspace components, the Silver theme, and some support
+libraries.
 
-x11/kde contains minimal Plasma Desktop and a basic set of KDE Applications.
-Additional Plasma components can be install via x11/plasma6-plasma port.
-More KDE applications can be found in the kde-applications category:
+x11/sonicde contains minimal Plasma Desktop and a basic set of KDE
+Applications.  Additional Plasma components can be install via
+x11/plasma6-plasma port.  More KDE applications can be found in the
+kde-applications category:
 
 % pkg search -S origin kde-applications
