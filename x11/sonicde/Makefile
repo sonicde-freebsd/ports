@@ -2,7 +2,7 @@ PORTNAME=	sonicde
 PORTVERSION=	${KDE_PLASMA_VERSION}.${KDE_APPLICATIONS_VERSION}
 CATEGORIES=	x11 kde
 
-MAINTAINER=	kde@FreeBSD.org
+MAINTAINER=	b-aazbsd@proton.me
 COMMENT=	Plasma Desktop and KDE Applications (meta port)
 WWW=		https://www.kde.org
 

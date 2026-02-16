@@ -5,7 +5,7 @@ CATEGORIES=	x11
 DISTNAME=	plasma-desktop-${DISTVERSION}
 DIST_SUBDIR=	KDE/plasma/${KDE_PLASMA_VERSION}
 
-MAINTAINER=	kde@FreeBSD.org
+MAINTAINER=	b-aazbsd@proton.me
 COMMENT=	Stub port for sonic desktop
 LICENSE=	LGPL20
 
