@@ -1,6 +1,6 @@
     COMMENT = Ports to support the X window system
 
-    SUBDIR += sonic
+    SUBDIR += sonicde
     SUBDIR += sonic-desktop
     SUBDIR += sonic-workspace
 
