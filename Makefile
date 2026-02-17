@@ -1,4 +1,5 @@
 SUBDIR += x11
+SUBDIR += x11-themes
 SUBDIR += x11-wm
 
 .include <bsd.port.subdir.mk>

@@ -11,7 +11,8 @@ LICENSE=	NONE
 LIB_DEPENDS=	libkworkspace6.so:x11/sonic-workspace
 RUN_DEPENDS=	kde-baseapps>=${KDE_APPLICATIONS_VERSION}:x11/kde-baseapps \
 		kwin_x11:x11-wm/sonic-win \
-		kaccess:x11/sonic-desktop
+		kaccess:x11/sonic-desktop \
+		silver-settings:x11-themes/silver-theme
 
 USES=		kde:6 metaport qt:6
 USE_KDE=	${_USE_PLASMA_ALL:Nbreeze-gtk:Nkde-gtk-config:Noxygen:Noxygen-sounds:Nplasma-workspace:Nkwin-x11:Nplasma-desktop}
