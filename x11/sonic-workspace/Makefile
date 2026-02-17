@@ -49,6 +49,8 @@ USE_KDE=	activities activities-stats archive attica auth baloo \
 USE_QT=		base declarative location svg
 USE_XORG=	ice sm x11 xau xcb xcursor xext xfixes xft xi xrender xtst
 
+CONFLICTS=	plasma6-plasma-workspace
+
 SHEBANG_FILES=	components/calendar/kconf_update/migrate-calendar-to-plugin-id.py.in
 
 CMAKE_ON=	PLASMA_X11_DEFAULT_SESSION \

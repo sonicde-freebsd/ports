@@ -42,6 +42,8 @@ USE_KDE=	activities activities-stats attica auth baloo bookmarks \
 USE_QT=		5compat base declarative svg wayland
 USE_XORG=	x11 xcb xcursor xext xfixes xi xrender
 
+CONFLICTS=	plasma6-plasma-desktop
+
 OPTIONS_DEFINE=		SDL
 OPTIONS_GROUP=		IM
 IM_DESC=		Input Method Support

@@ -2,11 +2,11 @@ PORTNAME=	sonic-win
 DISTVERSION=	6.5.5
 CATEGORIES=	x11-wm
 
-COMMENT=	lighter-weight fork of kwin
 MAINTAINER=	acm@FreeBSD.org
-LICENSE=	LGPL20
+COMMENT=	X11 only, lighter-weight fork of kwin
+WWW=		https://github.com/Sonic-DE/sonic-win
 
-CONFLICTS=	plasma6-kwin-x11
+LICENSE=	LGPL20
 
 BUILD_DEPENDS=	${LOCALBASE}/include/linux/input.h:devel/evdev-proto \
 		hwdata>0:misc/hwdata
@@ -42,6 +42,8 @@ USE_KDE=	auth breeze colorscheme config \
 		ecm:build aurorae:run breeze:run
 USE_QT=		base declarative sensors tools
 USE_XORG=	ice sm x11 xcb xext xi
+
+CONFLICTS=	plasma6-kwin-x11
 
 BINARY_ALIAS=	python3=${PYTHON_CMD}
 SHEBANG_FILES=	src/plugins/strip-effect-metadata.py
