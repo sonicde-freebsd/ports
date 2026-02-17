@@ -1,9 +1,9 @@
 PORTNAME=	sonic-desktop
-DISTVERSION=	${KDE_PLASMA_VERSION}
+DISTVERSION=	6.5.5
 CATEGORIES=	x11
-MASTER_SITES=	KDE/stable/plasma/${KDE_PLASMA_VERSION}/
+MASTER_SITES=	KDE/stable/plasma/${DISTVERSION}/
 DISTNAME=	plasma-desktop-${DISTVERSION}
-DIST_SUBDIR=	KDE/plasma/${KDE_PLASMA_VERSION}
+DIST_SUBDIR=	KDE/plasma/${DISTVERSION}
 
 MAINTAINER=	b-aazbsd@proton.me
 COMMENT=	Stub port of Plasma desktop for SonicDE
