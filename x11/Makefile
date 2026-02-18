@@ -1,7 +1,7 @@
     COMMENT = Ports to support the X window system
 
-    SUBDIR += sonicde
     SUBDIR += sonic-desktop
     SUBDIR += sonic-workspace
+    SUBDIR += sonicde
 
 .include <bsd.port.subdir.mk>
