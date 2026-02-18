@@ -291,13 +291,13 @@ step_5(){
 
 step_6(){
 	section 'Install run dependencies'
-	make run-depends-list | sort | uniq | grep -v '^==' | awk -F "/" '{print $(NF-1) "/" $NF}' | xargs pkg install -y || exit 1
+	make run-depends-list | sort | uniq | grep -v '^==' | awk -F "/" '{print $(NF-1) "/" $NF}' | grep -v 'sonic-.*\|silver-theme' | xargs pkg install -y || exit 1
 	section_end
 }
 
 step_7(){
 	section 'Install build dependencies'
-	make build-depends-list | sort | uniq | grep -v '^==' | awk -F "/" '{print $(NF-1) "/" $NF}' | xargs pkg install -y || exit 1
+	make build-depends-list | sort | uniq | grep -v '^==' | awk -F "/" '{print $(NF-1) "/" $NF}' | grep -v 'sonic-.*\|silver-theme' | xargs pkg install -y || exit 1
 	section_end
 }
 
