@@ -2,6 +2,6 @@
 
     SUBDIR += sonic-desktop
     SUBDIR += sonic-workspace
-    SUBDIR += sonicde
+#    SUBDIR += sonicde
 
 .include <bsd.port.subdir.mk>
